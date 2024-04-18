@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CapnpCsharpObsoleteCodeBehindFiles Remove="capnp\Test - Copy.capnp.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Capnp.Net.Runtime" Version="1.3.118" />
+    <PackageReference Include="CapnpC.CSharp.MsBuild.Generation" Version="1.3.118" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <CapnpFiles Update="capnp\Test.capnp">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).capnp.cs</CodeBehindFile>
+      <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
+    </CapnpFiles>
+  </ItemGroup>
+
+</Project>
