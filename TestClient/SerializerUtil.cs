@@ -18,8 +18,25 @@ namespace TestClient
                 Phones =
                 [
                     new Test.PhoneNumber { Number = phoneNumber1, TheType = Test.PhoneNumber.Type.home },
-                new Test.PhoneNumber { Number = phoneNumber2, TheType = Test.PhoneNumber.Type.mobile },
-            ],
+                    new Test.PhoneNumber { Number = phoneNumber2, TheType = Test.PhoneNumber.Type.mobile },
+                ],
+            };
+
+            return content;
+        }
+
+        public static Models.Test GenerateTestJsonInstance(string email, string name, string phoneNumber1, string phoneNumber2)
+        {
+            Models.Test content = new()
+            {
+                BirthDate = new Models.Date { Day = 5, Month = 10, Year = 2000 },
+                Email = email,
+                Name = name,
+                Phones =
+                [
+                    new Models.PhoneNumber { Number = phoneNumber1, Type = Models.PhoneType.Home },
+                    new Models.PhoneNumber { Number = phoneNumber2, Type = Models.PhoneType.Mobile },
+                ],
             };
 
             return content;
@@ -41,14 +58,14 @@ namespace TestClient
         {
             string serializedContent = JsonSerializer.Serialize(testContent);
 
-            return Encoding.ASCII.GetBytes(serializedContent);
+            return Encoding.UTF8.GetBytes(serializedContent);
         }
 
         public static byte[] SerializeJson(Test testContent)
         {
             string serializedContent = JsonSerializer.Serialize(testContent);
 
-            return Encoding.ASCII.GetBytes(serializedContent);
+            return Encoding.UTF8.GetBytes(serializedContent);
         }
 
         public static void DeserializeCapnp(byte[] byteArray)

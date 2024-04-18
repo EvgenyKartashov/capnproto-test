@@ -25,7 +25,7 @@ namespace TestClient.Models
         [JsonPropertyName("month")]
         public byte Month { get; set; }
 
-        [JsonPropertyName("year")]
+        [JsonPropertyName("day")]
         public byte Day { get; set; }
     }
 
