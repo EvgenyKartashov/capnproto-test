@@ -3,8 +3,11 @@
 using import "Date.capnp".Date;
 using import "PhoneNumber.capnp".PhoneNumber;
 
-struct Test {
-  name @0 :Text;
+annotation foo(struct) :Text;
+annotation bar(field) :Text;
+
+struct Test $foo("struct annotation") {
+  name @0 :Text $bar("field annotation");
   birthdate @3 :Date;
 
   email @1 :Text;
