@@ -17,11 +17,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <CapnpFiles Update="capnp\PhoneNumberType.capnp">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).capnp.cs</CodeBehindFile>
+      <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
+    </CapnpFiles>
+    <CapnpFiles Update="capnp\PhoneNumber.capnp">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).capnp.cs</CodeBehindFile>
+      <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
+    </CapnpFiles>
     <CapnpFiles Update="capnp\Test.capnp">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).capnp.cs</CodeBehindFile>
       <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
     </CapnpFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="capnp\generated\" />
   </ItemGroup>
 
 </Project>

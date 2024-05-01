@@ -17,8 +17,8 @@ namespace TestClient
                 Name = name,
                 Phones =
                 [
-                    new Test.PhoneNumber { Number = phoneNumber1, TheType = Test.PhoneNumber.Type.home },
-                    new Test.PhoneNumber { Number = phoneNumber2, TheType = Test.PhoneNumber.Type.mobile },
+                    new PhoneNumber { Number = phoneNumber1, Type = PhoneNumberType.home },
+                    new PhoneNumber { Number = phoneNumber2, Type = PhoneNumberType.mobile },
                 ],
             };
 
