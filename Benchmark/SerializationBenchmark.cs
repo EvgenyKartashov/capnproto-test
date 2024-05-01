@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using CapnpGen;
+using My.CSharp.Namespace;
 using TestClient;
 
 namespace Benchmark
@@ -20,7 +20,7 @@ namespace Benchmark
         [Benchmark]
         public void Capnp()
         {
-            byte[] byteArray = SerializerUtil.SerializeCapnp(testCapnpContent);
+            byte[] byteArray = SerializerUtil.SerializeCapnp(testCapnpContent).ToArray();
         }
 
         [Benchmark]

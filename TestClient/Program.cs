@@ -1,4 +1,4 @@
-﻿using CapnpGen;
+﻿using My.CSharp.Namespace;
 using TestClient;
 
 internal class Program
@@ -10,15 +10,16 @@ internal class Program
             using HttpClient client = new();
 
             Test testContent = SerializerUtil.GenerateTestInstance("testEmail.q", "testName", "testPhoneNumber1", "testPhoneNumber2");
-            byte[] byteArray = SerializerUtil.SerializeCapnp(testContent);
-            byte[] byteArray1 = SerializerUtil.SerializeJson(testContent);
-            HttpRequestMessage request = GetRequestMessage(byteArray, HttpMethod.Post, "http://localhost:5009/api/test/test-method");
-            //DeserializeCapnp(byteArray);
+            using MemoryStream ms = SerializerUtil.SerializeCapnp(testContent);
+            //byte[] byteArray1 = SerializerUtil.SerializeJson(testContent);
+            //HttpRequestMessage request = GetRequestMessage(ms.ToArray(), HttpMethod.Post, "http://localhost:5009/api/test/test-method");
+            
+            SerializerUtil.DeserializeCapnp(ms.ToArray());
 
-            Console.WriteLine("sending request");
-            HttpResponseMessage result = await client.SendAsync(request);
-            result.EnsureSuccessStatusCode();
-            Console.WriteLine("request has been sent");
+            //Console.WriteLine("sending request");
+            //HttpResponseMessage result = await client.SendAsync(request);
+            //result.EnsureSuccessStatusCode();
+            //Console.WriteLine("request has been sent");
         }
         catch (Exception ex)
         {

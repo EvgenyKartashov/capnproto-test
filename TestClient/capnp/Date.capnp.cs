@@ -3,27 +3,30 @@ using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CapnpGen
+namespace My.CSharp.Namespace
 {
-    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0xfadcbb3b3073b440UL)]
-    public class PhoneNumber : ICapnpSerializable
+    [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x800aa78a01361b87UL)]
+    public class Date : ICapnpSerializable
     {
-        public const UInt64 typeId = 0xfadcbb3b3073b440UL;
+        public const UInt64 typeId = 0x800aa78a01361b87UL;
         void ICapnpSerializable.Deserialize(DeserializerState arg_)
         {
             var reader = READER.create(arg_);
-            Number = reader.Number;
-            Type = reader.Type;
+            Year = reader.Year;
+            Month = reader.Month;
+            Day = reader.Day;
             applyDefaults();
         }
 
         public void serialize(WRITER writer)
         {
-            writer.Number = Number;
-            writer.Type = Type;
+            writer.Year = Year;
+            writer.Month = Month;
+            writer.Day = Day;
         }
 
         void ICapnpSerializable.Serialize(SerializerState arg_)
@@ -35,13 +38,19 @@ namespace CapnpGen
         {
         }
 
-        public string Number
+        public short Year
         {
             get;
             set;
         }
 
-        public CapnpGen.PhoneNumberType Type
+        public byte Month
+        {
+            get;
+            set;
+        }
+
+        public byte Day
         {
             get;
             set;
@@ -58,27 +67,34 @@ namespace CapnpGen
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string Number => ctx.ReadText(0, null);
-            public CapnpGen.PhoneNumberType Type => (CapnpGen.PhoneNumberType)ctx.ReadDataUShort(0UL, (ushort)0);
+            public short Year => ctx.ReadDataShort(0UL, (short)0);
+            public byte Month => ctx.ReadDataByte(16UL, (byte)0);
+            public byte Day => ctx.ReadDataByte(24UL, (byte)0);
         }
 
         public class WRITER : SerializerState
         {
             public WRITER()
             {
-                this.SetStruct(1, 1);
+                this.SetStruct(1, 0);
             }
 
-            public string Number
+            public short Year
             {
-                get => this.ReadText(0, null);
-                set => this.WriteText(0, value, null);
+                get => this.ReadDataShort(0UL, (short)0);
+                set => this.WriteData(0UL, value, (short)0);
             }
 
-            public CapnpGen.PhoneNumberType Type
+            public byte Month
             {
-                get => (CapnpGen.PhoneNumberType)this.ReadDataUShort(0UL, (ushort)0);
-                set => this.WriteData(0UL, (ushort)value, (ushort)0);
+                get => this.ReadDataByte(16UL, (byte)0);
+                set => this.WriteData(16UL, value, (byte)0);
+            }
+
+            public byte Day
+            {
+                get => this.ReadDataByte(24UL, (byte)0);
+                set => this.WriteData(24UL, value, (byte)0);
             }
         }
     }

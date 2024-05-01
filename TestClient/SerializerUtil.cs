@@ -1,8 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Capnp;
-using CapnpGen;
+using My.CSharp.Namespace;
 
 namespace TestClient
 {
@@ -42,16 +41,18 @@ namespace TestClient
             return content;
         }
 
-        public static byte[] SerializeCapnp(Test testContent)
+        public static MemoryStream SerializeCapnp(Test test)
         {
-            var messageBuilder = MessageBuilder.Create();
-            var writer = messageBuilder.BuildRoot<Test.WRITER>();
+            var msg = MessageBuilder.Create();
+            var root = msg.BuildRoot<Test.WRITER>();
+            test.serialize(root);
 
-            testContent.serialize(writer);
+            var ms = new MemoryStream();
+            var pump = new FramePump(ms);
+            pump.Send(msg.Frame);
+            ms.Seek(0, SeekOrigin.Begin);
 
-            Span<byte> resultSpan = MemoryMarshal.Cast<ulong, byte>(writer.RawData);
-
-            return resultSpan.ToArray();
+            return ms;
         }
 
         public static byte[] SerializeJson(Models.Test testContent)
@@ -71,16 +72,15 @@ namespace TestClient
         public static void DeserializeCapnp(byte[] byteArray)
         {
             using MemoryStream ms = new(byteArray);
-            ms.Seek(0, SeekOrigin.Begin);
+            var frame = Framing.ReadSegments(ms);
 
-            WireFrame frame = Framing.ReadSegments(ms);
-            DeserializerState deserializer = DeserializerState.CreateRoot(frame);
-            Test.READER testContent = new(deserializer);
+            var deserializer = DeserializerState.CreateRoot(frame);
+            var reader = new Test.READER(deserializer);
 
-            Console.WriteLine(testContent.Name);
-            Console.WriteLine(testContent.Email);
-            Console.WriteLine(testContent.Birthdate);
-            Console.WriteLine(testContent.Phones);
+            Console.WriteLine(reader.Name);
+            Console.WriteLine(reader.Email);
+            Console.WriteLine(reader.Birthdate);
+            Console.WriteLine(reader.Phones);
         }
     }
 }

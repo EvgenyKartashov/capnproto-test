@@ -1,12 +1,14 @@
+// Test class description.
 using Capnp;
 using Capnp.Rpc;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CapnpGen
+namespace My.CSharp.Namespace
 {
     [System.CodeDom.Compiler.GeneratedCode("capnpc-csharp", "1.3.0.0"), TypeId(0x8593d9ec1d0c3175UL)]
     public class Test : ICapnpSerializable
@@ -17,8 +19,8 @@ namespace CapnpGen
             var reader = READER.create(arg_);
             Name = reader.Name;
             Email = reader.Email;
-            Phones = reader.Phones?.ToReadOnlyList(_ => CapnpSerializable.Create<CapnpGen.PhoneNumber>(_));
-            Birthdate = CapnpSerializable.Create<CapnpGen.Date>(reader.Birthdate);
+            Phones = reader.Phones?.ToReadOnlyList(_ => CapnpSerializable.Create<My.CSharp.Namespace.PhoneNumber>(_)!);
+            Birthdate = CapnpSerializable.Create<My.CSharp.Namespace.Date>(reader.Birthdate);
             applyDefaults();
         }
 
@@ -39,25 +41,25 @@ namespace CapnpGen
         {
         }
 
-        public string Name
+        public string? Name
         {
             get;
             set;
         }
 
-        public string Email
+        public string? Email
         {
             get;
             set;
         }
 
-        public IReadOnlyList<CapnpGen.PhoneNumber> Phones
+        public IReadOnlyList<My.CSharp.Namespace.PhoneNumber>? Phones
         {
             get;
             set;
         }
 
-        public CapnpGen.Date Birthdate
+        public My.CSharp.Namespace.Date? Birthdate
         {
             get;
             set;
@@ -74,10 +76,10 @@ namespace CapnpGen
             public static READER create(DeserializerState ctx) => new READER(ctx);
             public static implicit operator DeserializerState(READER reader) => reader.ctx;
             public static implicit operator READER(DeserializerState ctx) => new READER(ctx);
-            public string Name => ctx.ReadText(0, null);
-            public string Email => ctx.ReadText(1, null);
-            public IReadOnlyList<CapnpGen.PhoneNumber.READER> Phones => ctx.ReadList(2).Cast(CapnpGen.PhoneNumber.READER.create);
-            public CapnpGen.Date.READER Birthdate => ctx.ReadStruct(3, CapnpGen.Date.READER.create);
+            public string? Name => ctx.ReadText(0, null);
+            public string? Email => ctx.ReadText(1, null);
+            public IReadOnlyList<My.CSharp.Namespace.PhoneNumber.READER> Phones => ctx.ReadList(2).Cast(My.CSharp.Namespace.PhoneNumber.READER.create);
+            public My.CSharp.Namespace.Date.READER Birthdate => ctx.ReadStruct(3, My.CSharp.Namespace.Date.READER.create);
         }
 
         public class WRITER : SerializerState
@@ -87,27 +89,27 @@ namespace CapnpGen
                 this.SetStruct(0, 4);
             }
 
-            public string Name
+            public string? Name
             {
                 get => this.ReadText(0, null);
                 set => this.WriteText(0, value, null);
             }
 
-            public string Email
+            public string? Email
             {
                 get => this.ReadText(1, null);
                 set => this.WriteText(1, value, null);
             }
 
-            public ListOfStructsSerializer<CapnpGen.PhoneNumber.WRITER> Phones
+            public ListOfStructsSerializer<My.CSharp.Namespace.PhoneNumber.WRITER> Phones
             {
-                get => BuildPointer<ListOfStructsSerializer<CapnpGen.PhoneNumber.WRITER>>(2);
+                get => BuildPointer<ListOfStructsSerializer<My.CSharp.Namespace.PhoneNumber.WRITER>>(2);
                 set => Link(2, value);
             }
 
-            public CapnpGen.Date.WRITER Birthdate
+            public My.CSharp.Namespace.Date.WRITER Birthdate
             {
-                get => BuildPointer<CapnpGen.Date.WRITER>(3);
+                get => BuildPointer<My.CSharp.Namespace.Date.WRITER>(3);
                 set => Link(3, value);
             }
         }
