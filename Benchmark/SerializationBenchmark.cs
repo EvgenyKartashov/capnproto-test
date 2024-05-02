@@ -10,29 +10,41 @@ namespace Benchmark
         Test testCapnpContent = default!;
         TestClient.Models.Test testJsonContent = default!;
 
+        byte[] byteArrayToDeserializeCapnp = default!;
+        byte[] byteArrayToDeserializeJson = default!;
+
         [GlobalSetup]
         public void Setup()
         {
             testCapnpContent = SerializerUtil.GenerateTestInstance("testEmail.q", "testName", "testPhoneNumber1", "testPhoneNumber2");
             testJsonContent = SerializerUtil.GenerateTestJsonInstance("testEmail.q", "testName", "testPhoneNumber1", "testPhoneNumber2");
+
+            byteArrayToDeserializeCapnp = SerializerUtil.SerializeCapnp(testCapnpContent).ToArray();
+            byteArrayToDeserializeJson = SerializerUtil.SerializeJson(testJsonContent);
         }
 
         [Benchmark]
-        public void Capnp()
+        public void SerializeCapnp()
         {
-            byte[] byteArray = SerializerUtil.SerializeCapnp(testCapnpContent).ToArray();
+            _ = SerializerUtil.SerializeCapnp(testCapnpContent).ToArray();
         }
 
         [Benchmark]
-        public void JsonCapnp()
+        public void DeserializeCapnp()
         {
-            byte[] byteArray = SerializerUtil.SerializeJson(testCapnpContent);
+            _ = SerializerUtil.DeserializeCapnp(byteArrayToDeserializeCapnp);
         }
 
         [Benchmark]
-        public void Json()
+        public void SerializeJson()
         {
-            byte[] byteArray = SerializerUtil.SerializeJson(testJsonContent);
+            _ = SerializerUtil.SerializeJson(testJsonContent);
+        }
+
+        [Benchmark]
+        public void DeserializeJson()
+        {
+            _ = SerializerUtil.DeserializeJson(byteArrayToDeserializeJson);
         }
     }
 }

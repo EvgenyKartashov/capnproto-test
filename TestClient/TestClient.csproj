@@ -34,8 +34,4 @@
     </CapnpFiles>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="capnp\generated\" />
-  </ItemGroup>
-
 </Project>

@@ -62,14 +62,7 @@ namespace TestClient
             return Encoding.UTF8.GetBytes(serializedContent);
         }
 
-        public static byte[] SerializeJson(Test testContent)
-        {
-            string serializedContent = JsonSerializer.Serialize(testContent);
-
-            return Encoding.UTF8.GetBytes(serializedContent);
-        }
-
-        public static void DeserializeCapnp(byte[] byteArray)
+        public static Test.READER DeserializeCapnp(byte[] byteArray)
         {
             using MemoryStream ms = new(byteArray);
             var frame = Framing.ReadSegments(ms);
@@ -77,10 +70,15 @@ namespace TestClient
             var deserializer = DeserializerState.CreateRoot(frame);
             var reader = new Test.READER(deserializer);
 
-            Console.WriteLine(reader.Name);
-            Console.WriteLine(reader.Email);
-            Console.WriteLine(reader.Birthdate);
-            Console.WriteLine(reader.Phones);
+            return reader;
+        }
+
+        public static Models.Test? DeserializeJson(byte[] byteArray)
+        {
+            Utf8JsonReader reader = new(byteArray);
+            Models.Test? result = JsonSerializer.Deserialize<Models.Test>(ref reader);
+
+            return result;
         }
     }
 }
