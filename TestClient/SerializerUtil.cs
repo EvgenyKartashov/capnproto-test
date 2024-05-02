@@ -11,7 +11,10 @@ namespace TestClient
         {
             Test content = new()
             {
-                Birthdate = new Date { Day = 5, Month = 10, Year = 2000 },
+                Birthdate = new Test.birthdate
+                {
+                    Value = new Date { Day = 5, Month = 10, Year = 2000 }
+                },
                 Email = email,
                 Name = name,
                 Phones =

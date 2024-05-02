@@ -11,10 +11,21 @@ internal class Program
 
             Test testContent = SerializerUtil.GenerateTestInstance("testEmail.q", "testName", "testPhoneNumber1", "testPhoneNumber2");
             using MemoryStream ms = SerializerUtil.SerializeCapnp(testContent);
-            //byte[] byteArray1 = SerializerUtil.SerializeJson(testContent);
-            //HttpRequestMessage request = GetRequestMessage(ms.ToArray(), HttpMethod.Post, "http://localhost:5009/api/test/test-method");
             
-            SerializerUtil.DeserializeCapnp(ms.ToArray());
+            var reader = SerializerUtil.DeserializeCapnp(ms.ToArray());
+
+            if(reader.TryGetBirthday(out Date.READER date))
+            {
+                Console.WriteLine(date.Year);
+                Console.WriteLine(date.Month);
+                Console.WriteLine(date.Day);
+            }
+            else
+            {
+                Console.WriteLine("Birthday is empty");
+            }
+
+            //HttpRequestMessage request = GetRequestMessage(ms.ToArray(), HttpMethod.Post, "http://localhost:5009/api/test/test-method");
 
             //Console.WriteLine("sending request");
             //HttpResponseMessage result = await client.SendAsync(request);

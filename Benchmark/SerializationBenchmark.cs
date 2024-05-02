@@ -26,7 +26,7 @@ namespace Benchmark
         [Benchmark]
         public void SerializeCapnp()
         {
-            _ = SerializerUtil.SerializeCapnp(testCapnpContent).ToArray();
+            _ = SerializerUtil.SerializeCapnp(testCapnpContent);
         }
 
         [Benchmark]

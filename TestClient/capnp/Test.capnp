@@ -12,8 +12,10 @@ using import "PhoneNumber.capnp".PhoneNumber;
 
 struct Test {
   name @0 :Text;
-  birthdate @3 :Date;
-
-  email @1 :Text;
-  phones @2 :List(PhoneNumber);
+  birthdate : union {
+    nullopt @1 :Void;
+    value @2 :Date;
+  }
+  email @3 :Text;
+  phones @4 :List(PhoneNumber);
 }
